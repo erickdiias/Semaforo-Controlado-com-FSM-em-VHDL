@@ -51,4 +51,4 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
 ## Como Usar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/semaforo-fsm-vhdl.git
+   git clone https://github.com/erickdiias/Semaforo_Controlado_com_FSM_em_VHDL.git
