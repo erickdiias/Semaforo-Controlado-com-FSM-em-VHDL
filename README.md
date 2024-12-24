@@ -6,7 +6,7 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
 - **VHDL:** Linguagem de descrição de hardware utilizada para implementar a máquina de estados finita (FSM).
 - **FPGA DE0-Nano da Altera (Intel):** A placa de desenvolvimento foi usada para implementar e testar o sistema em hardware real.
 - **Quartus:** Ambiente de desenvolvimento utilizado para compilar o código VHDL, simular e carregar o design na FPGA.
-- 
+  
 ## Funcionalidades
 - **Controle de Estados:**
   - Estados pré-definidos para cada fase do semáforo.
