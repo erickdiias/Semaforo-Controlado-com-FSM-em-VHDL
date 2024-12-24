@@ -1,7 +1,12 @@
 # Semáforo Controlado com FSM em VHDL
 
 Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de controle baseada em uma máquina de estados finita (FSM). O sistema é projetado para simular um cruzamento com três conjuntos de luzes e operar em um modo de segurança acionado por um botão.
+## Tecnologias Utilizadas
 
+- **VHDL:** Linguagem de descrição de hardware utilizada para implementar a máquina de estados finita (FSM).
+- **FPGA DE0-Nano da Altera (Intel):** A placa de desenvolvimento foi usada para implementar e testar o sistema em hardware real.
+- **Quartus:** Ambiente de desenvolvimento utilizado para compilar o código VHDL, simular e carregar o design na FPGA.
+- 
 ## Funcionalidades
 - **Controle de Estados:**
   - Estados pré-definidos para cada fase do semáforo.
@@ -59,6 +64,26 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
 ### Diagrama do RTL
 
 ![Diagrama do RTL](imagens/RTL_viewer.png)
+
+## Utilização da FPGA DE0-Nano da Altera
+
+A **FPGA DE0-Nano** é uma placa compacta de desenvolvimento baseada no chip **Cyclone IV** da Altera (Intel). Ela oferece 40 pinos I/O, memória SRAM de 2 Mbit, e é ideal para projetos digitais e sistemas embarcados.
+
+### Como Utilizar:
+1. **Desenvolvimento do Código VHDL:** O código VHDL é compilado no **Quartus** e pode ser carregado na FPGA DE0-Nano.
+2. **Mapeamento de Entradas e Saídas:** Conecte LEDs para representar as luzes do semáforo e use um botão para acionar o modo de segurança.
+3. **Programação da FPGA:** Após compilar o código no **Quartus**, use a ferramenta USB-Blaster para carregar o design na FPGA.
+
+## Ambiente de Simulação: Quartus
+
+O **Quartus** é o ambiente de desenvolvimento integrado (IDE) utilizado para desenvolver e simular o design da FPGA. Ele oferece ferramentas para compilação, simulação, depuração e programação de dispositivos FPGA.
+
+### Passos para Utilização:
+1. **Instalação do Quartus:** Baixe e instale o **Quartus Prime Lite Edition** (versão gratuita).
+2. **Criação do Projeto:** No Quartus, crie um novo projeto e selecione a FPGA correta (Cyclone IV EP4CE22F17C8N).
+3. **Desenvolvimento e Simulação:** Implemente o código VHDL para a FSM do semáforo e simule o comportamento utilizando o **ModelSim**.
+4. **Compilação:** Compile o código para gerar o arquivo de configuração `.sof` que será carregado na FPGA.
+5. **Programação:** Conecte a **DE0-Nano** ao PC via USB-Blaster e carregue o arquivo de configuração na FPGA.
 
 ## Como Usar
 1. Clone o repositório:
