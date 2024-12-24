@@ -14,6 +14,10 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
 - **Sinais de Saída:**
   - Cada saída (`s1`, `s2`, `s3`) é um vetor de 3 bits representando o estado das luzes: vermelho, amarelo ou verde.
 
+### Diagrama de funcionalidade do Semáforo
+
+![Diagrama de funcionalidade](imagens/simulação_waveform.png)
+
 ## Estrutura do Sistema
 ### Estados da FSM:
 1. **Estado Inicial (`estado_inicial_reset`):**
@@ -36,6 +40,10 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
   - **`tempo_safety`**: 5 segundos.
   - **`tempo_erro`**: 5 segundos.
 
+### FSM
+
+![Diagrama de FSM](imagens/state_machine_viewer.png)
+
 ### Componentes e Sinais:
 - **Latch JK:**
   - Captura o estado do botão de emergência (`btm`).
@@ -47,6 +55,10 @@ Este projeto implementa um sistema de semáforo utilizando VHDL, com lógica de 
     - `"011"`: Verde-Amarelo.
     - `"001"`: Verde.
     - `"111"`: Teste luminoso.
+
+### Diagrama do RTL
+
+![Diagrama do RTL](imagens/RTL_viewer.png)
 
 ## Como Usar
 1. Clone o repositório:
