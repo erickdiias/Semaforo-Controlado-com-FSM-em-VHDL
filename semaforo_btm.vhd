@@ -1,11 +1,18 @@
+--------------------------------------------------------
+-- Descrição: Semáforo Controlado com FSM em VHDL ------
+-- Autores: Erick Dias, Guilherme Mano, Henrique Vaz ---
+-- Ultima atualização: 24/12/24 ------------------------
+--------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 
 entity semaforo_btm is
     port(
-        clk, rst            : in std_logic;
+        clk                 : in std_logic;
+        rst                 : in std_logic := '0';
         btm                 : in std_logic := '0';
-        s1, s2, s3          : out std_logic_vector(2 downto 0)
+        s1, s2, s3          : out std_logic_vector(2 downto 0);
+        display             : out std_logic_vector(6 downto 0)
     );
 end entity;
 
@@ -19,14 +26,14 @@ architecture hardware of semaforo_btm is
     constant verde_amarelo   : std_logic_vector(2 downto 0) := "011";
     constant verde           : std_logic_vector(2 downto 0) := "001";
 
-    -- Declaração das veriaveis de tempo em segundos
+    -- Declaração das variáveis de tempo em segundos
     constant tempo_inicial   : integer := 2;
     constant tempo_erro      : integer := 5;
     constant tempo_safety    : integer := 5;
     constant tempo_verde     : integer := 10; -- Configurável entre 5 e 10 segundos.
     constant tempo_amarelo   : integer := 5;  -- Configurável entre 2 e 5 segundos
     
-    -- Declaração das veriaveis de tempo em Hertz
+    -- Declaração das variáveis de tempo em Hertz
     constant clk_freq        : integer := 1;
     constant clk_inicial     : integer := clk_freq * tempo_inicial;
     constant clk_erro        : integer := clk_freq * tempo_erro;
@@ -40,11 +47,12 @@ architecture hardware of semaforo_btm is
     signal contador, tempo   : integer := 0;
     signal contagem          : boolean;
     
-    -- Declaração dos omponentes
-    signal reset             : std_logic := '0';
+    -- Declaração dos componentes
+    signal reset             : std_logic;
     signal q                 : std_logic;
+    signal display_ativo     : std_logic_vector(6 downto 0) := (others => '0');
 
-    component latch_jk is
+    component FF_JK is
         port(
             clk     : in std_logic; 
             j       : in std_logic;
@@ -54,9 +62,16 @@ architecture hardware of semaforo_btm is
         );
     end component;
 
+    component display_7seg is
+        port(
+            valor : in integer; 
+            display : out std_logic_vector(6 downto 0)
+        );
+    end component;
+
 begin
 
-    botao: latch_jk 
+    FF_JK_inst: FF_JK 
         port map (
             clk => clk,
             j => btm,
@@ -64,6 +79,15 @@ begin
             q => q,
             q_bar => open
         );
+
+    display_inst: display_7seg 
+        port map (
+            valor => contador/clk_freq,
+            display => display_ativo
+        );
+
+    
+    display <= display_ativo when estado_atual = estado_safety else (others => '0');
 
     -- Processo para definição do sincronismo da FSM
     sincronismo: process(clk, rst)
@@ -95,7 +119,7 @@ begin
     -- Processo combinacional para determinar o próximo estado e a saída
     combinacional: process(estado_atual, contagem, q)
     begin
-        reset <= '0'; -- Valor padrão
+        reset <= '0';
         case estado_atual is
             when estado_inicial_reset =>
                 tempo <= clk_inicial;
