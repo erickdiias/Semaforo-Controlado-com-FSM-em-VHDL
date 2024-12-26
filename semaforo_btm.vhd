@@ -11,8 +11,7 @@ entity semaforo_btm is
         clk                 : in std_logic;
         rst                 : in std_logic := '0';
         btm                 : in std_logic := '0';
-        s1, s2, s3          : out std_logic_vector(2 downto 0);
-        display             : out std_logic_vector(6 downto 0)
+        s1, s2, s3          : out std_logic_vector(2 downto 0)
     );
 end entity;
 
@@ -34,7 +33,7 @@ architecture hardware of semaforo_btm is
     constant tempo_amarelo   : integer := 5;  -- Configurável entre 2 e 5 segundos
     
     -- Declaração das variáveis de tempo em Hertz
-    constant clk_freq        : integer := 1;
+    constant clk_freq        : integer := 100e6;
     constant clk_inicial     : integer := clk_freq * tempo_inicial;
     constant clk_erro        : integer := clk_freq * tempo_erro;
     constant clk_safety      : integer := clk_freq * tempo_safety;
@@ -50,8 +49,7 @@ architecture hardware of semaforo_btm is
     -- Declaração dos componentes
     signal reset             : std_logic;
     signal q                 : std_logic;
-    signal display_ativo     : std_logic_vector(6 downto 0) := (others => '0');
-
+    
     component FF_JK is
         port(
             clk     : in std_logic; 
@@ -59,13 +57,6 @@ architecture hardware of semaforo_btm is
             k       : in std_logic; 
             q       : out std_logic; 
             q_bar   : out std_logic 
-        );
-    end component;
-
-    component display_7seg is
-        port(
-            valor : in integer; 
-            display : out std_logic_vector(6 downto 0)
         );
     end component;
 
@@ -79,15 +70,6 @@ begin
             q => q,
             q_bar => open
         );
-
-    display_inst: display_7seg 
-        port map (
-            valor => contador/clk_freq,
-            display => display_ativo
-        );
-
-    
-    display <= display_ativo when estado_atual = estado_safety else (others => '0');
 
     -- Processo para definição do sincronismo da FSM
     sincronismo: process(clk, rst)
