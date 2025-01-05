@@ -15,7 +15,7 @@ entity top_level is
         semaforo2  : out std_logic_vector(2 downto 0);
         semaforo3  : out std_logic_vector(2 downto 0)
     );
-end entity TRABALHO_3B;
+end entity top_level;
 
 architecture main of top_level is
 begin
