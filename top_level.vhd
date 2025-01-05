@@ -6,7 +6,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity TRABALHO_3B is
+entity top_level is
     port(
         clk        : in  std_logic;
         reset      : in  std_logic;
@@ -17,7 +17,7 @@ entity TRABALHO_3B is
     );
 end entity TRABALHO_3B;
 
-architecture main of TRABALHO_3B is
+architecture main of top_level is
 begin
     
     semaforo_int: entity work.semaforo
