@@ -8,7 +8,7 @@ use ieee.std_logic_1164.all;
 
 entity semaforo is
     generic(
-        freq_clk             : integer := 100e6;
+        freq_clk             : integer := 50e6;
         tempo_inicial        : integer := 2;
         tempo_erro           : integer := 5;
         tempo_safety         : integer := 5;
