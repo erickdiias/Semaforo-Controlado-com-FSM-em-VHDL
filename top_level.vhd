@@ -22,7 +22,7 @@ begin
     
     semaforo_int: entity work.semaforo
         generic map(
-            freq_clk => 1,     -- Configurável entre 1 e 100 MHz
+            freq_clk => 50e6,     -- Configurável entre 1 e 100 MHz
             tempo_verde => 10, -- Configurável entre 5 e 10 segundos.
             tempo_amarelo => 5 -- Configurável entre 2 e 5 segundos
         )
