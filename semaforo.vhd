@@ -62,7 +62,7 @@ begin
 
     FF_JK_int: entity work.FF_JK 
         port map (
-            clk => clk_1Hz,
+            clk => clk,
             j => btm,
             k => resetFF_JK,
             q => estadoBtm
