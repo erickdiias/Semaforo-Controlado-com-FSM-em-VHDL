@@ -24,7 +24,7 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            if contagem = freq_clk then
+            if contagem = freq_clk / 2 then
                 contagem <= 0;
                 clk_1Hz_int <= not clk_1Hz_int;
             else
