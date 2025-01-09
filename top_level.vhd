@@ -18,16 +18,29 @@ entity top_level is
 end entity top_level;
 
 architecture main of top_level is
+
+    -- Declaração do sinal de clock de 1Hz
+    signal clk_1Hz : std_logic;
+
 begin
+
+    -- Instanciação do divisor de frequência
+    clk_div_inst : entity work.clk_div
+        generic map(
+            freq_clk => 50e6 -- Configurável entre 1 e 100 MHz
+        )
+        port map(
+            clk     => clk,
+            clk_1Hz => clk_1Hz
+        );
     
     semaforo_int: entity work.semaforo
-        generic map(
-            freq_clk => 50e6,     -- Configurável entre 1 e 100 MHz
+        generic map(   
             tempo_verde => 10, -- Configurável entre 5 e 10 segundos.
             tempo_amarelo => 5 -- Configurável entre 2 e 5 segundos
         )
         port map(
-            clk => clk,
+            clk => clk_1Hz,
             rst => reset,
             btm => btm,
             semaforo1 => semaforo1,
