@@ -58,7 +58,7 @@ begin
     -- Processo para definição do sincronismo da FSM
     sincronismo: process(clk, rst)
     begin
-        if rst = '1' then
+        if rst = '0' then
             estadoAtual <= estadoInicialReset;
         elsif rising_edge(clk) then
             estadoAtual <= estadoProximo;
@@ -68,7 +68,7 @@ begin
     -- Processo para realização da contagem
     cont: process(clk, rst)
     begin
-        if rst = '1' then
+        if rst = '0' then
             contagem <= 0;
         elsif rising_edge(clk) then
             if estadoAtual /= estadoProximo then
@@ -96,7 +96,7 @@ begin
                 end if;
 
             when estadoB =>
-                if estadoBtm = '1' and contagem = tempo_amarelo then
+                if estadoBtm = '0' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
@@ -109,7 +109,7 @@ begin
                 end if;
 
             when estadoD =>
-                if estadoBtm = '1' and contagem = tempo_amarelo then
+                if estadoBtm = '0' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
@@ -122,7 +122,7 @@ begin
                 end if;
 
             when estadoF =>
-                if estadoBtm = '1' and contagem = tempo_amarelo then
+                if estadoBtm = '0' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
