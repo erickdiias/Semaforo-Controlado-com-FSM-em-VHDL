@@ -40,12 +40,12 @@ begin
             tempo_amarelo => 5 -- Configurável entre 2 e 5 segundos
         )
         port map(
-            clk => clk_1Hz,
+            clk_50MHz => clk,
+            clk_1Hz => clk_1Hz,
             rst => reset,
             btm => btm,
             semaforo1 => semaforo1,
             semaforo2 => semaforo2,
             semaforo3 => semaforo3
         );
-
 end architecture main;
