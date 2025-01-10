@@ -12,7 +12,8 @@ entity semaforo is
         tempo_amarelo        : integer := 5   -- Configurável entre 2 e 5 segundos
     );
     port(
-        clk                  : in std_logic;
+        clk_50MHz            : in std_logic;
+        clk_1Hz              : in std_logic;
         rst                  : in std_logic;
         btm                  : in std_logic;
         semaforo1            : out std_logic_vector(2 downto 0);
@@ -47,30 +48,31 @@ architecture hardware of semaforo is
 
 begin
 
-    FF_JK_int: entity work.FF_JK 
+    latch_jk_int: entity work.latch_jk 
         port map (
-            clk => clk,
+            clk_50MHz => clk_50MHz,
             j => btm,
             k => resetFF_JK,
-            q => estadoBtm
+            q => estadoBtm,
+            q_bar => open
         );
 
     -- Processo para definição do sincronismo da FSM
-    sincronismo: process(clk, rst)
+    sincronismo: process(clk_1Hz, rst)
     begin
-        if rst = '0' then
+        if rst = '1' then
             estadoAtual <= estadoInicialReset;
-        elsif rising_edge(clk) then
+        elsif rising_edge(clk_1Hz) then
             estadoAtual <= estadoProximo;
         end if;
     end process sincronismo;
     
     -- Processo para realização da contagem
-    cont: process(clk, rst)
+    cont: process(clk_1Hz, rst)
     begin
-        if rst = '0' then
+        if rst = '1' then
             contagem <= 0;
-        elsif rising_edge(clk) then
+        elsif rising_edge(clk_1Hz) then
             if estadoAtual /= estadoProximo then
                 contagem <= 0;
             else
@@ -96,7 +98,7 @@ begin
                 end if;
 
             when estadoB =>
-                if estadoBtm = '0' and contagem = tempo_amarelo then
+                if estadoBtm = '1' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
@@ -109,7 +111,7 @@ begin
                 end if;
 
             when estadoD =>
-                if estadoBtm = '0' and contagem = tempo_amarelo then
+                if estadoBtm = '1' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
@@ -122,7 +124,7 @@ begin
                 end if;
 
             when estadoF =>
-                if estadoBtm = '0' and contagem = tempo_amarelo then
+                if estadoBtm = '1' and contagem = tempo_amarelo then
                     estadoProximo <= estadoSafety;
                     resetFF_JK <= '1';
                 elsif contagem = tempo_amarelo then
